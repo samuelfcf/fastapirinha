@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  api_rinha_db:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_DB: app_db
+      POSTGRES_PASSWORD: app_password
+    ports:
+      - "5432:5432"
+
+  fastapirinha:
+    image: apirinha:latest
+    entrypoint: ./entrypoint.sh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9999:9999"
+    depends_on:
+      - api_rinha_db
+    environment:
+      DATABASE_URL: postgresql://app_user:app_password@api_rinha_db:5432/app_db
+
+volumes:
+  pgdata:

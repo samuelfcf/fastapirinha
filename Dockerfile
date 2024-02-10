@@ -4,6 +4,9 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 WORKDIR app/
 COPY . .
 
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
 RUN pip install poetry
 
 RUN poetry config installer.max-workers 10
