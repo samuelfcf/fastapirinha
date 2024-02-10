@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -13,3 +15,13 @@ class Client(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     limite: Mapped[int]
     saldo: Mapped[int]
+
+
+class Transaction(Base):
+    __tablename__ = 'transactions'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    valor:  Mapped[int]
+    tipo: Mapped[int]
+    descricao: Mapped[int]
+    realizada_em: Mapped[datetime]
