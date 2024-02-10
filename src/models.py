@@ -1,9 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class Base(DeclarativeBase):
@@ -22,8 +20,8 @@ class Transaction(Base):
     __tablename__ = 'transactions'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    client_id: Mapped[int] = mapped_column(ForeignKey("client.id"))
-    valor:  Mapped[int]
+    client_id: Mapped[int] = mapped_column(ForeignKey('client.id'))
+    valor: Mapped[int]
     tipo: Mapped[int]
     descricao: Mapped[int]
     realizada_em: Mapped[datetime]
