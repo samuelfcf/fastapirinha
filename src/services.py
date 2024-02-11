@@ -112,6 +112,9 @@ def get_client_statement(db: Session, client: Client):
     )
     statement_object['saldo']['limite'] = client.limite
 
+    if not last_transactions:
+        return statement_object
+
     for transaction in last_transactions:
         transaction_object = {
             'valor': transaction.valor,
