@@ -29,4 +29,5 @@ def populate_data():
     finally:
         db.close()
 
+
 populate_data()

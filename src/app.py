@@ -12,13 +12,14 @@ app = FastAPI()
 client_respository = ClientRepository()
 transaction_respository = TransactionRepository()
 
+
 def process_credit(db: Session, body: TransactionSchemaInput, client: Client):
     description = body.descricao
     value = body.valor
-    
+
     try:
         client.saldo += value
-        db.commit()        
+        db.commit()
     except Exception as e:
         print(f'Cannot update saldo: {e}')
 

@@ -23,6 +23,7 @@ class ClientRepository:
 
         return client
 
+
 class TransactionRepository:
     def create(self, db: Session, obj) -> Transaction:
 
