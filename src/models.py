@@ -23,5 +23,5 @@ class Transaction(Base):
     client_id: Mapped[int] = mapped_column(ForeignKey('client.id'))
     valor: Mapped[int]
     tipo: Mapped[str]
-    descricao: Mapped[int]
+    descricao: Mapped[str]
     realizada_em: Mapped[datetime]
