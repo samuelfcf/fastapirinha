@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from src.models import Client, Transaction
@@ -36,3 +37,18 @@ class TransactionRepository:
         db.refresh(transaction)
 
         return transaction
+
+    def get_last_transactions(
+        self, db: Session, client_id: int, limit: int = 10
+    ) -> list[Transaction]:
+        transactions = (
+            db.query(Transaction)
+            .filter(Transaction.client_id == client_id)
+            .order_by(desc(Transaction.realizada_em))
+            .limit(limit)
+            .all()
+        )
+        if not transactions:
+            return None
+
+        return transactions

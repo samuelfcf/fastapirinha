@@ -13,3 +13,8 @@ class TransactionSchemaInput(BaseModel):
 class TransactionSchemaResponse(BaseModel):
     limite: int
     saldo: int
+
+
+class StatementResponse(BaseModel):
+    saldo: dict
+    ultimas_transacoes: list

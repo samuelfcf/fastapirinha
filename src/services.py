@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.orm import Session
 
 from src.models import Client
@@ -87,3 +89,36 @@ def process_transaction(
 
 def get_client_by_id(db: Session, id: str):
     return client_respository.get_by_id(db, id)
+
+
+def get_last_transactions(db: Session, client: Client):
+    return transaction_respository.get_last_transactions(db, client.id)
+
+
+def get_statement_response_object():
+    return {
+        'saldo': {'total': None, 'data_extrato': None, 'limite': None},
+        'ultimas_transacoes': [],
+    }
+
+
+def get_client_statement(db: Session, client: Client):
+    last_transactions = get_last_transactions(db, client)
+
+    statement_object = get_statement_response_object()
+    statement_object['saldo']['total'] = client.saldo
+    statement_object['saldo']['data_extrato'] = datetime.utcnow().strftime(
+        '%Y-%m-%dT%H:%M:%S.%fZ'
+    )
+    statement_object['saldo']['limite'] = client.limite
+
+    for transaction in last_transactions:
+        transaction_object = {
+            'valor': transaction.valor,
+            'tipo': transaction.tipo,
+            'descricao': transaction.descricao,
+            'realizada_em': transaction.realizada_em,
+        }
+        statement_object['ultimas_transacoes'].append(transaction_object)
+
+    return statement_object
