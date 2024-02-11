@@ -9,6 +9,7 @@ class TransactionSchemaInput(BaseModel):
         strip_whitespace=True, min_length=1, max_length=10
     )   # type: ignore
 
+
 class TransactionSchemaResponse(BaseModel):
     limite: int
     saldo: int
