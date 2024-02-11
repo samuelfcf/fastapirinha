@@ -1,5 +1,4 @@
 from fastapi import Depends, FastAPI, Response, status
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from src.db_session import get_db

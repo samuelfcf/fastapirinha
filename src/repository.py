@@ -1,6 +1,4 @@
 from datetime import datetime
-
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from src.models import Client, Transaction
