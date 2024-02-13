@@ -12,6 +12,11 @@ db = SessionLocal()
 
 def populate_data():
     try:
+        check_client_table = db.query(Client).all()
+        if check_client_table:
+            print('Db already populated')
+            return
+
         client_data = [
             {'id': 1, 'limite': 100000, 'saldo': 0},
             {'id': 2, 'limite': 80000, 'saldo': 0},
