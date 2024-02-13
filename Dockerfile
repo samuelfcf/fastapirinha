@@ -1,16 +1,27 @@
 FROM python:3.11-slim
 ENV POETRY_VIRTUALENVS_CREATE=false
 
-WORKDIR app/
-COPY . .
+RUN apt-get update && \
+    apt-get install -y gcc libpq-dev && \
+    apt clean && \
+    rm -rf /var/cache/apt/* && \
+    pip install poetry
 
-RUN chmod +x entrypoint.sh
+COPY pyproject.toml poetry.lock ./
+COPY src ./src
+COPY migrations ./migrations
+COPY settings ./settings
+
+RUN poetry config installer.max-workers 10 && \
+    poetry install --no-interaction --no-ansi
+
+COPY --chown=app:app ./src /src
+COPY gconf.py .
+
+ENV GUNICORN_CMD_ARGS="-c gconf.py"
+
+COPY entrypoint.sh .
+COPY init_db.py .
+COPY alembic.ini .
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-
-RUN pip install poetry
-
-RUN poetry config installer.max-workers 10
-RUN poetry install --no-interaction --no-ansi
-
-EXPOSE 9999
-CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "--port", "9999", "src.app:app" ]
