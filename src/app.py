@@ -1,4 +1,6 @@
 from fastapi import Depends, FastAPI, Response, status
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from src.db_session import get_db
@@ -13,8 +15,18 @@ from src.services import (
     process_transaction,
 )
 
-app = FastAPI()
+app = FastAPI(root_path="/api/v1")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+@app.get('/')
+def docs():
+    return RedirectResponse(url="docs/")
 
 @app.post(
     '/clientes/{id}/transacoes',
