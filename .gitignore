@@ -1,5 +1,5 @@
 .vscode
 .ruff_cache
-.load-test
+load-test
 */__pycache__/
 **/*/__pycache__
