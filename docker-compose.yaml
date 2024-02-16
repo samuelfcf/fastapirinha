@@ -3,6 +3,7 @@ version: '3'
 services:
   api_rinha_db:
     image: postgres
+    command: postgres -c 'max_connections=1000'
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
