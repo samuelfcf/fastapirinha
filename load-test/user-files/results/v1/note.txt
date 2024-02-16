@@ -1,2 +1,0 @@
-Testes da primeira versão
-Apenas com servidor simples uvicorn.

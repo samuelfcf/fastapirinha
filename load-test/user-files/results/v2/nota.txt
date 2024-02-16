@@ -1,2 +1,0 @@
-primeira versão com todos os componentes
-ainda sem otimizações de banco.
